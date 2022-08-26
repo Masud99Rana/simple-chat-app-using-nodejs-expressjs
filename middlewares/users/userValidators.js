@@ -15,7 +15,6 @@ const addUserValidators = [
     .isAlpha("en-US", { ignore: " -" })
     .withMessage("Name must not contain anything other than alphabet")
     .trim(),
-
   check("email")
     .isEmail()
     .withMessage("Invalid email address")
@@ -30,7 +29,6 @@ const addUserValidators = [
         throw createError(err.message);
       }
     }),
-
   check("mobile")
     .isMobilePhone("bn-BD", {
       strictMode: true,
@@ -46,7 +44,6 @@ const addUserValidators = [
         throw createError(err.message);
       }
     }),
-    
   check("password")
     .isStrongPassword()
     .withMessage(
