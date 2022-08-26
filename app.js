@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const moment = require("moment");
 
 // internal imports
 const loginRouter = require("./router/loginRouter");
@@ -21,6 +22,13 @@ const {
 const app = express();
 const server = http.createServer(app);
 dotenv.config();
+
+// socket creation
+const io = require("socket.io")(server);
+global.io = io;
+
+// set comment as app locals
+app.locals.moment = moment;
 
 // database connection
 mongoose
@@ -43,6 +51,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // parse cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
 
 // routing setup
 
