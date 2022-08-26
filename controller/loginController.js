@@ -1,6 +1,6 @@
 // get login page
 function getLogin(req, res, next) {
-  res.send('Hello Login');
+  res.render("index");
 }
 
 module.exports = {

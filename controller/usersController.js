@@ -1,6 +1,6 @@
 // get users page
 function getUsers(req, res, next) {
-  res.send('Hello User');
+  res.render("users");
 }
 
 module.exports = {
