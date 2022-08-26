@@ -1,9 +1,15 @@
 // external imports
 const express = require("express");
+const http = require("http");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+
+// internal imports
+const loginRouter = require("./router/loginRouter");
+const usersRouter = require("./router/usersRouter");
+const inboxRouter = require("./router/inboxRouter");
 
 
 // internal imports
@@ -13,6 +19,7 @@ const {
 } = require("./middlewares/common/errorHandler");
 
 const app = express();
+const server = http.createServer(app);
 dotenv.config();
 
 // database connection
@@ -38,9 +45,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // routing setup
-app.get('/', (req, res) => {
-  res.send(process.env.NODE_ENV);
-});
+
+// app.get('/', (req, res) => {
+//   res.send('Hello Masud!');
+// });
+
+app.use("/", loginRouter);
+app.use("/users", usersRouter);
+app.use("/inbox", inboxRouter);
 
 // 404 not found handler
 app.use(notFoundHandler);
@@ -48,6 +60,7 @@ app.use(notFoundHandler);
 // common error handler
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`app listening to port ${process.env.PORT}`);
 });
+ 
